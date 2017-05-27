@@ -18,8 +18,8 @@ data class PersonData(
     val starships: List<String>,
     val vehicles: List<String>,
     val url: String,
-    val created: Date,
-    val edited: Date
+    val created: String,
+    val edited: String
 )
 
 data class FilmData(
