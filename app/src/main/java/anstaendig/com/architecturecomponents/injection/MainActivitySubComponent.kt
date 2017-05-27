@@ -1,5 +1,6 @@
-package anstaendig.com.architecturecomponents.ui
+package anstaendig.com.architecturecomponents.injection
 
+import anstaendig.com.architecturecomponents.ui.MainActivity
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 

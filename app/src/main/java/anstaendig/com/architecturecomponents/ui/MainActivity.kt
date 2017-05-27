@@ -9,9 +9,9 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import anstaendig.com.architecturecomponents.App.Companion.graph
 import anstaendig.com.architecturecomponents.R
-import anstaendig.com.architecturecomponents.bindView
 import anstaendig.com.architecturecomponents.datasource.PageData
 import anstaendig.com.architecturecomponents.datasource.PersonData
+import anstaendig.com.architecturecomponents.util.bindView
 import anstaendig.com.architecturecomponents.viewmodel.MainActivityViewModel
 import dagger.android.AndroidInjection
 

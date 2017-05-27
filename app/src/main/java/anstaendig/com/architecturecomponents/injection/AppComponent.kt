@@ -1,8 +1,6 @@
-package anstaendig.com.architecturecomponents
+package anstaendig.com.architecturecomponents.injection
 
-import anstaendig.com.architecturecomponents.datasource.DatasourceModule
-import anstaendig.com.architecturecomponents.repository.RepositoryModule
-import anstaendig.com.architecturecomponents.ui.MainActivityModule
+import anstaendig.com.architecturecomponents.App
 import anstaendig.com.architecturecomponents.viewmodel.MainActivityViewModel
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule

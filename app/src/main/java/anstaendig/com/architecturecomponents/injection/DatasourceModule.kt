@@ -1,5 +1,6 @@
-package anstaendig.com.architecturecomponents.datasource
+package anstaendig.com.architecturecomponents.injection
 
+import anstaendig.com.architecturecomponents.datasource.SwapiService
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers

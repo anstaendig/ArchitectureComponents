@@ -2,8 +2,7 @@ package anstaendig.com.architecturecomponents
 
 import android.app.Activity
 import android.app.Application
-import anstaendig.com.architecturecomponents.datasource.DatasourceModule
-import anstaendig.com.architecturecomponents.repository.RepositoryModule
+import anstaendig.com.architecturecomponents.injection.*
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasDispatchingActivityInjector
 import javax.inject.Inject

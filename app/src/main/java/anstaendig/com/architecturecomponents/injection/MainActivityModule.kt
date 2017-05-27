@@ -1,6 +1,7 @@
-package anstaendig.com.architecturecomponents.ui
+package anstaendig.com.architecturecomponents.injection
 
 import android.app.Activity
+import anstaendig.com.architecturecomponents.ui.MainActivity
 import dagger.Binds
 import dagger.Module
 import dagger.android.ActivityKey

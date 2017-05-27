@@ -1,6 +1,8 @@
-package anstaendig.com.architecturecomponents.repository
+package anstaendig.com.architecturecomponents.injection
 
 import anstaendig.com.architecturecomponents.datasource.SwapiService
+import anstaendig.com.architecturecomponents.repository.Repository
+import anstaendig.com.architecturecomponents.repository.RepositoryImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

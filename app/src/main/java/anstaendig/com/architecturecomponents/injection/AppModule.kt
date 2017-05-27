@@ -1,5 +1,6 @@
-package anstaendig.com.architecturecomponents
+package anstaendig.com.architecturecomponents.injection
 
+import anstaendig.com.architecturecomponents.App
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
