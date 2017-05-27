@@ -7,7 +7,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
-import anstaendig.com.architecturecomponents.App.Companion.graph
 import anstaendig.com.architecturecomponents.R
 import anstaendig.com.architecturecomponents.datasource.PageData
 import anstaendig.com.architecturecomponents.datasource.PersonData
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity(), LifecycleRegistryOwner {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
     viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-    graph.inject(viewModel)
     viewModel.liveData.observe(this, Observer<PageData<PersonData>> {
       it?.let { messageTextView.text = it.results.size.toString() }
     })

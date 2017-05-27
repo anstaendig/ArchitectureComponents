@@ -11,19 +11,17 @@ class App : Application(), HasDispatchingActivityInjector {
 
   @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
 
-  companion object {
-    lateinit var graph: AppComponent
-  }
+  lateinit var appComponent: AppComponent
 
   override fun onCreate() {
     super.onCreate()
-    graph = DaggerAppComponent
+    appComponent = DaggerAppComponent
         .builder()
         .appModule(AppModule(this))
         .datasourceModule(DatasourceModule())
         .repositoryModule(RepositoryModule())
         .build()
-    graph.inject(this)
+    appComponent.inject(this)
   }
 
   override fun activityInjector() = dispatchingActivityInjector

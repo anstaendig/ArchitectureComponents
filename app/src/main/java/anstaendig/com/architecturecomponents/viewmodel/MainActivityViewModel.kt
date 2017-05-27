@@ -3,6 +3,7 @@ package anstaendig.com.architecturecomponents.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import anstaendig.com.architecturecomponents.App
 import anstaendig.com.architecturecomponents.datasource.PageData
 import anstaendig.com.architecturecomponents.datasource.PersonData
 import anstaendig.com.architecturecomponents.repository.Repository
@@ -15,5 +16,9 @@ class MainActivityViewModel(app: Application) : AndroidViewModel(app) {
 
   val liveData: LiveData<PageData<PersonData>> by lazy {
     repository.loadPeople().toLiveData()
+  }
+
+  init {
+    (app as App).appComponent.inject(this)
   }
 }
