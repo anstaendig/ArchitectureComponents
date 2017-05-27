@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity(), LifecycleRegistryOwner {
     setContentView(R.layout.activity_main)
     viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
     graph.inject(viewModel)
-    viewModel.init()
     viewModel.liveData.observe(this, Observer<PageData<PersonData>> {
       it?.let { messageTextView.text = it.results.size.toString() }
     })

@@ -13,9 +13,7 @@ class MainActivityViewModel(app: Application) : AndroidViewModel(app) {
 
   @Inject lateinit var repository: Repository
 
-  lateinit var liveData: LiveData<PageData<PersonData>>
-
-  fun init() {
-    liveData = repository.loadPeople().toLiveData()
+  val liveData: LiveData<PageData<PersonData>> by lazy {
+    repository.loadPeople().toLiveData()
   }
 }
