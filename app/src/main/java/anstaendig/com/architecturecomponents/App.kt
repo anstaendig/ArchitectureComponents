@@ -1,28 +1,21 @@
 package anstaendig.com.architecturecomponents
 
-import android.app.Activity
 import android.app.Application
 import anstaendig.com.architecturecomponents.injection.*
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasDispatchingActivityInjector
-import javax.inject.Inject
 
-class App : Application(), HasDispatchingActivityInjector {
+class App : Application() {
 
-  @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
-
-  lateinit var appComponent: AppComponent
-
-  override fun onCreate() {
-    super.onCreate()
-    appComponent = DaggerAppComponent
+  val appComponent: AppComponent by lazy {
+    DaggerAppComponent
         .builder()
         .appModule(AppModule(this))
         .datasourceModule(DatasourceModule())
         .repositoryModule(RepositoryModule())
         .build()
-    appComponent.inject(this)
   }
 
-  override fun activityInjector() = dispatchingActivityInjector
+  override fun onCreate() {
+    super.onCreate()
+    appComponent.injectTo(this)
+  }
 }

@@ -4,6 +4,7 @@ import android.net.Uri
 import anstaendig.com.architecturecomponents.datasource.PageData
 import anstaendig.com.architecturecomponents.datasource.PersonData
 import anstaendig.com.architecturecomponents.datasource.SwapiService
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -22,4 +23,8 @@ constructor(private val swapiService: SwapiService) : Repository {
 
   override fun loadPerson(id: String): Single<PersonData>
       = swapiService.loadPerson(id)
+
+  override fun addPersonToFavorites(personData: PersonData): Completable {
+    return Completable.complete()
+  }
 }
