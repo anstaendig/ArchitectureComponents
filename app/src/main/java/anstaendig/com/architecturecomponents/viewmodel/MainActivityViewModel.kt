@@ -22,11 +22,16 @@ class MainActivityViewModel(app: Application) : AndroidViewModel(app) {
     (app as App).appComponent.plus(MainActivityModule()).inject(this)
     disposables.add(
         repository.loadPerson("1")
-            .subscribe({ personData ->
-              viewState.postValue(MainActivityViewState(personData.name))
+            .map { personData -> MainActivityViewState(personData.name) }
+            .onErrorReturn { error -> MainActivityViewState(error.localizedMessage) }
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .startWith { MainActivityViewState("loading") }
+            .subscribe({ state ->
+              viewState.postValue(state)
             }, { throwable ->
-              viewState.postValue(MainActivityViewState(throwable.toString()))
-            }))
+              throw IllegalStateException()
+            })
+    )
   }
 
   override fun onCleared() {

@@ -33,7 +33,11 @@ class MainActivity : AppCompatActivity(), LifecycleRegistryOwner {
     setContentView(R.layout.activity_main)
     (application as App).appComponent.plus(MainActivityModule()).inject(this)
     viewModel.viewState.observe(this, Observer<MainActivityViewState> {
-      it?.let { messageTextView.text = it.name }
+      it?.let { render(it) }
     })
+  }
+
+  private fun render(viewState: MainActivityViewState) {
+    messageTextView.text = viewState.name
   }
 }
