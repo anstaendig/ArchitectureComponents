@@ -3,7 +3,7 @@ package anstaendig.com.architecturecomponents.injection
 import anstaendig.com.architecturecomponents.viewmodel.MainActivityViewModel
 import dagger.Subcomponent
 
-@Subcomponent()
+@Subcomponent
 interface ViewModelSubcomponent {
 
   @Subcomponent.Builder
