@@ -10,6 +10,7 @@ import javax.inject.Singleton
 @Module
 class RepositoryModule {
 
-  @Provides @Singleton
+  @Provides
+  @Singleton
   fun provideRepository(swapiService: SwapiService): Repository = RepositoryImpl(swapiService)
 }
