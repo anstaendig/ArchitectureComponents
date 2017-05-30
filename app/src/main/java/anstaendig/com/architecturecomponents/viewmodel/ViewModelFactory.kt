@@ -13,26 +13,14 @@ constructor(private val viewModelSubcomponent: ViewModelSubcomponent) : ViewMode
       MainActivityViewModel::class.java to { viewModelSubcomponent.mainActivityViewModel() }
   )
 
+  @Suppress("UNCHECKED_CAST")
   override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//    var creator: () -> ViewModel = creators.get(modelClass)
     creators[modelClass]?.let {
-      return it as T
-    } ?: throw RuntimeException("ViewModel creation failed")
-//    if (creator == null) {
-//      for ((key, value) in creators) {
-//        if (modelClass.isAssignableFrom(key)) {
-//          creator = value
-//          break
-//        }
-//      }
-//    }
-//    if (creator == null) {
-//      throw IllegalArgumentException("unknown model class " + modelClass)
-//    }
-//    try {
-//      return creator as T
-//    } catch (e: Exception) {
-//      throw RuntimeException(e)
-//    }
+      try {
+        return it as T
+      } catch (e: Exception) {
+        throw RuntimeException("ViewModel $modelClass cannot be cast to corresponding type")
+      }
+    } ?: throw RuntimeException("ViewModel $modelClass creation failed")
   }
 }
