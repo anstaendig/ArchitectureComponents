@@ -16,8 +16,11 @@ constructor(private val viewModelSubcomponent: ViewModelSubcomponent) : ViewMode
   @Suppress("UNCHECKED_CAST")
   override fun <T : ViewModel> create(modelClass: Class<T>): T {
     creators[modelClass]?.let {
-      return it as? T ?: throw RuntimeException("ViewModel $modelClass cannot be cast to " +
-          "corresponding type")
+      try {
+        return it as T
+      } catch (e: Exception) {
+        throw RuntimeException("ViewModel $modelClass cannot be cast to corresponding type")
+      }
     } ?: throw RuntimeException("ViewModel $modelClass creation failed")
   }
 }
