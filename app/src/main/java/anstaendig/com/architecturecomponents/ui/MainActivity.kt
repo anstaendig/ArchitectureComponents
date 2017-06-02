@@ -26,6 +26,10 @@ class MainActivity : BaseActivity() {
   override fun getLayoutResource() = R.layout.activity_main
 
   private fun render(viewState: MainActivityViewState) {
-    messageTextView.text = viewState.name
+    when(viewState) {
+      is MainActivityViewState.Error -> messageTextView.text = viewState.errorMessage
+      is MainActivityViewState.Success -> messageTextView.text = viewState.personData.name
+      is MainActivityViewState.Loading -> messageTextView.text = "Is loading..."
+    }
   }
 }
