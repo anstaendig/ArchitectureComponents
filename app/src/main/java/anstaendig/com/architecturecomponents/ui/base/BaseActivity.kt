@@ -2,13 +2,19 @@ package anstaendig.com.architecturecomponents.ui.base
 
 import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.annotation.CallSuper
-import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
+import anstaendig.com.architecturecomponents.viewmodel.base.BaseViewModel
 import dagger.android.AndroidInjection
+import javax.inject.Inject
 
-abstract class BaseActivity : AppCompatActivity(), LifecycleRegistryOwner {
+abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState>
+  : AppCompatActivity(), LifecycleRegistryOwner {
+
+  @Inject
+  lateinit var viewModel: M
 
   // We have to hold a strong reference to the instance of LifecycleRegistry, otherwise GC will
   // collect it and LifecycleObserver of LiveData won’t see the active observers from LifecycleOwner
@@ -16,15 +22,19 @@ abstract class BaseActivity : AppCompatActivity(), LifecycleRegistryOwner {
   @Suppress("LeakingThis")
   private val lifecycleRegistry = LifecycleRegistry(this)
 
+  abstract val layoutResource: Int
+
   @CallSuper
   override fun onCreate(savedInstanceState: Bundle?) {
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
-    setContentView(getLayoutResource())
+    setContentView(layoutResource)
+    viewModel.viewState.observe(this, Observer<S> {
+      it?.let { state -> render(state) }
+    })
   }
 
   override fun getLifecycle() = lifecycleRegistry
 
-  @LayoutRes
-  abstract fun getLayoutResource(): Int
+  abstract fun render(viewState: S)
 }

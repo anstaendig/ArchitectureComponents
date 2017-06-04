@@ -1,21 +1,15 @@
 package anstaendig.com.architecturecomponents.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import anstaendig.com.architecturecomponents.repository.Repository
 import anstaendig.com.architecturecomponents.ui.MainActivityViewState
+import anstaendig.com.architecturecomponents.viewmodel.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.exceptions.OnErrorNotImplementedException
 import javax.inject.Inject
 
 class MainActivityViewModel
 @Inject
-constructor(repository: Repository) : ViewModel() {
-
-  private val disposables = CompositeDisposable()
-
-  val viewState = MutableLiveData<MainActivityViewState>()
+constructor(repository: Repository) : BaseViewModel<MainActivityViewState>() {
 
   init {
     disposables.add(
@@ -31,10 +25,5 @@ constructor(repository: Repository) : ViewModel() {
               throw OnErrorNotImplementedException(throwable)
             })
     )
-  }
-
-  override fun onCleared() {
-    super.onCleared()
-    disposables.clear()
   }
 }
