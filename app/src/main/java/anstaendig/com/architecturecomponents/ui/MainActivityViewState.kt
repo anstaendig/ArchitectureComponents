@@ -9,5 +9,3 @@ sealed class MainActivityViewState : BaseViewState {
   data class Success(val personData: PersonData) : MainActivityViewState()
   data class Error(val errorMessage: String) : MainActivityViewState()
 }
-
-

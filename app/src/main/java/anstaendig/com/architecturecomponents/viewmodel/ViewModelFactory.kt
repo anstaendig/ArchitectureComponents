@@ -19,8 +19,9 @@ constructor(private val viewModelSubcomponent: ViewModelSubcomponent) : ViewMode
       try {
         return it as T
       } catch (e: Exception) {
-        throw RuntimeException("ViewModel $modelClass cannot be cast to corresponding type")
+        throw RuntimeException("ViewModel ${it::class.java.simpleName} cannot be cast to" +
+            " ${modelClass.simpleName} type")
       }
-    } ?: throw RuntimeException("ViewModel $modelClass creation failed")
+    } ?: throw RuntimeException("Creator method for ViewModel ${modelClass.simpleName} is null")
   }
 }
