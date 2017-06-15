@@ -27,6 +27,8 @@ class MainActivity : BaseActivity<MainActivityViewModel, MainActivityViewState>(
     )
   }
 
+  override fun getViewModelClass(): Class<MainActivityViewModel> = MainActivityViewModel::class.java
+
   override fun render(viewState: MainActivityViewState) {
     when (viewState) {
       is MainActivityViewState.Error -> messageTextView.text = viewState.errorMessage

@@ -1,8 +1,6 @@
 package anstaendig.com.architecturecomponents.ui.base
 
-import android.arch.lifecycle.LifecycleRegistry
-import android.arch.lifecycle.LifecycleRegistryOwner
-import android.arch.lifecycle.Observer
+import android.arch.lifecycle.*
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v7.app.AppCompatActivity
@@ -14,8 +12,8 @@ import javax.inject.Inject
 abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState>
   : AppCompatActivity(), LifecycleRegistryOwner {
 
-  @Inject
-  lateinit var viewModel: M
+  protected @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+  protected lateinit var viewModel: M
 
   protected val disposables = CompositeDisposable()
 
@@ -32,6 +30,7 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState>
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(layoutResource)
+    viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
     viewModel.viewState.observe(this, Observer<S> { state ->
       state?.let { render(it) }
     })
@@ -43,6 +42,8 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState>
   }
 
   override fun getLifecycle() = lifecycleRegistry
+
+  abstract fun getViewModelClass(): Class<M>
 
   abstract fun render(viewState: S)
 }
