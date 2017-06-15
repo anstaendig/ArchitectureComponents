@@ -13,8 +13,8 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState>
   : AppCompatActivity(), LifecycleRegistryOwner {
 
   protected @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-  protected lateinit var viewModel: M
 
+  protected val viewModel: M by lazy { ViewModelProviders.of(this, viewModelFactory).get(viewModelClass) }
   protected val disposables = CompositeDisposable()
 
   // We have to hold a strong reference to the instance of LifecycleRegistry, otherwise GC will
@@ -24,13 +24,13 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState>
   private val lifecycleRegistry = LifecycleRegistry(this)
 
   abstract val layoutResource: Int
+  abstract val viewModelClass: Class<M>
 
   @CallSuper
   override fun onCreate(savedInstanceState: Bundle?) {
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(layoutResource)
-    viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
     viewModel.viewState.observe(this, Observer<S> { state ->
       state?.let { render(it) }
     })
@@ -42,8 +42,6 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState>
   }
 
   override fun getLifecycle() = lifecycleRegistry
-
-  abstract fun getViewModelClass(): Class<M>
 
   abstract fun render(viewState: S)
 }
