@@ -5,7 +5,8 @@ import anstaendig.com.architecturecomponents.ui.base.BaseViewState
 
 sealed class MainActivityViewState : BaseViewState {
 
-  object Loading : MainActivityViewState()
+  object Idle : MainActivityViewState()
+  object InProgress : MainActivityViewState()
   data class Success(val personData: PersonData) : MainActivityViewState()
-  data class Error(val errorMessage: String) : MainActivityViewState()
+  data class Failure(val errorMessage: String) : MainActivityViewState()
 }

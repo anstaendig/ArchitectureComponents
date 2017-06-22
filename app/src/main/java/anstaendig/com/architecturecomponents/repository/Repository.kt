@@ -4,6 +4,7 @@ import android.net.Uri
 import anstaendig.com.architecturecomponents.datasource.PageData
 import anstaendig.com.architecturecomponents.datasource.PersonData
 import io.reactivex.Completable
+import io.reactivex.ObservableTransformer
 import io.reactivex.Single
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -20,4 +21,17 @@ interface Repository {
   fun loadPerson(@Path("id") id: String): Single<PersonData>
 
   fun addPersonToFavorites(personData: PersonData): Completable
+
+  val results: ObservableTransformer<Action, Result>
+}
+
+sealed class Result {
+  object InProgress : Result()
+  data class Success(val data: PersonData) : Result()
+  data class Failure(val e: String) : Result()
+}
+
+sealed class Action {
+  data class LoadPerson(val id: String) : Action()
+  object Two : Action()
 }

@@ -12,9 +12,12 @@ import javax.inject.Inject
 abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState>
   : AppCompatActivity(), LifecycleRegistryOwner {
 
-  protected @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+  @Inject
+  protected lateinit var viewModelFactory: ViewModelProvider.Factory
 
-  protected val viewModel: M by lazy { ViewModelProviders.of(this, viewModelFactory).get(viewModelClass) }
+  protected val viewModel: M by lazy {
+    ViewModelProviders.of(this, viewModelFactory).get(viewModelClass)
+  }
   protected val disposables = CompositeDisposable()
 
   // We have to hold a strong reference to the instance of LifecycleRegistry, otherwise GC will
