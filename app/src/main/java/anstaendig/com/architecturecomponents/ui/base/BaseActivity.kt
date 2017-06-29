@@ -4,21 +4,23 @@ import android.arch.lifecycle.*
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v7.app.AppCompatActivity
+import anstaendig.com.architecturecomponents.ui.event.UiEvent
 import anstaendig.com.architecturecomponents.viewmodel.base.BaseViewModel
 import dagger.android.AndroidInjection
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState>
+abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent>
   : AppCompatActivity(), LifecycleRegistryOwner {
+
+  private val disposables = CompositeDisposable()
 
   @Inject
   protected lateinit var viewModelFactory: ViewModelProvider.Factory
-
   protected val viewModel: M by lazy {
     ViewModelProviders.of(this, viewModelFactory).get(viewModelClass)
   }
-  protected val disposables = CompositeDisposable()
 
   // We have to hold a strong reference to the instance of LifecycleRegistry, otherwise GC will
   // collect it and LifecycleObserver of LiveData won’t see the active observers from LifecycleOwner
@@ -26,8 +28,9 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState>
   @Suppress("LeakingThis")
   private val lifecycleRegistry = LifecycleRegistry(this)
 
-  abstract val layoutResource: Int
-  abstract val viewModelClass: Class<M>
+  protected abstract val events: Observable<T>
+  protected abstract val layoutResource: Int
+  protected abstract val viewModelClass: Class<M>
 
   @CallSuper
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,14 +40,17 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState>
     viewModel.viewState.observe(this, Observer<S> { state ->
       state?.let { render(it) }
     })
+    disposables.addAll(events.subscribe { event ->
+      viewModel.events.onNext(event)
+    })
   }
 
-  override fun onPause() {
+  override fun onDestroy() {
     disposables.dispose()
-    super.onPause()
+    super.onDestroy()
   }
 
   override fun getLifecycle() = lifecycleRegistry
 
-  abstract fun render(viewState: S)
+  abstract protected fun render(viewState: S)
 }

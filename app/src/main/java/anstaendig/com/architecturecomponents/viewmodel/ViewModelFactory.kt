@@ -16,9 +16,8 @@ constructor(private val viewModelSubcomponent: ViewModelSubcomponent) : ViewMode
     creators[modelClass]?.let {
       try {
         return it.invoke() as T
-      } catch (e: Exception) {
-        throw RuntimeException("ViewModel ${it::class.java.simpleName} cannot be cast to" +
-            " ${modelClass.simpleName} type")
+      } catch (e: ClassCastException) {
+        throw RuntimeException("ViewModel ${it::class.java.simpleName} cannot be cast to ${modelClass.simpleName} type")
       }
     } ?: throw RuntimeException("Creator method for ViewModel ${modelClass.simpleName} is null")
   }
