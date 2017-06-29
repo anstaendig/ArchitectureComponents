@@ -20,18 +20,23 @@ class MainActivity : BaseActivity<MainActivityViewModel, MainActivityViewState, 
   override val layoutResource = R.layout.activity_main
   override val viewModelClass = MainActivityViewModel::class.java
 
-  private val changeTextObservable: Observable<MainActivityUiEvent.OnTextChange> by lazy {
-    editTextView.textChanges()
-        .filter { text -> text.isNotEmpty() }
-        .map { MainActivityUiEvent.OnTextChange(it.toString()) }
-  }
+  private val changeTextObservable: Observable<MainActivityUiEvent.OnTextChange>
+      by lazy(LazyThreadSafetyMode.NONE) {
+        editTextView.textChanges()
+            .filter { text -> text.isNotEmpty() }
+            .map { MainActivityUiEvent.OnTextChange(it.toString()) }
+      }
 
-  private val messageClickObservable: Observable<MainActivityUiEvent.OnMessageClick> by lazy {
-    messageTextView.clicks()
-        .map { MainActivityUiEvent.OnMessageClick(messageTextView.text.toString()) }
-  }
+  private val messageClickObservable: Observable<MainActivityUiEvent.OnMessageClick>
+      by lazy(LazyThreadSafetyMode.NONE) {
+        messageTextView.clicks()
+            .map { MainActivityUiEvent.OnMessageClick(messageTextView.text.toString()) }
+      }
 
-  override val events: Observable<MainActivityUiEvent> by lazy { Observable.merge(changeTextObservable, messageClickObservable) }
+  override val events: Observable<MainActivityUiEvent>
+      by lazy(LazyThreadSafetyMode.NONE) {
+        Observable.merge(changeTextObservable, messageClickObservable)
+      }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
