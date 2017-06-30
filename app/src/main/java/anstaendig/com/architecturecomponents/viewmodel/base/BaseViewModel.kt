@@ -11,8 +11,7 @@ import io.reactivex.subjects.BehaviorSubject
 
 abstract class BaseViewModel<S : BaseViewState> : ViewModel() {
 
-  private val disposables = CompositeDisposable()
-
+  val disposables = CompositeDisposable()
   val events: BehaviorSubject<UiEvent> = BehaviorSubject.create<UiEvent>()
   val viewState: MutableLiveData<S> = MutableLiveData()
 

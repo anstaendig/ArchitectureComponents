@@ -8,13 +8,10 @@ import anstaendig.com.architecturecomponents.ui.event.UiEvent
 import anstaendig.com.architecturecomponents.viewmodel.base.BaseViewModel
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent>
   : AppCompatActivity(), LifecycleRegistryOwner {
-
-  private val disposables = CompositeDisposable()
 
   @Inject
   protected lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -40,14 +37,9 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent
     viewModel.viewState.observe(this, Observer<S> { state ->
       state?.let { render(it) }
     })
-    disposables.addAll(events.subscribe { event ->
+    viewModel.disposables.addAll(events.subscribe { event ->
       viewModel.events.onNext(event)
     })
-  }
-
-  override fun onDestroy() {
-    disposables.dispose()
-    super.onDestroy()
   }
 
   override fun getLifecycle() = lifecycleRegistry
