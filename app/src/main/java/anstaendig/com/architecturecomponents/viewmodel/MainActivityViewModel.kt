@@ -33,21 +33,20 @@ constructor(repository: Repository) : BaseViewModel<MainActivityViewState>() {
     }
   }
 
-  init {
-    // TODO Try to find a better Kotlin-ish way of doing this...
-    super.init(
-        events
-            .compose(actions)
-            .compose(repository.results)
-            .scan<MainActivityViewState>(MainActivityViewState.Idle, { state, result ->
-              when (result) {
-                is Result.Success -> MainActivityViewState.Success(result.data)
-                is Result.Failure -> MainActivityViewState.Failure(result.e)
-                is Result.InProgress -> MainActivityViewState.InProgress
-              }
-            })
-    )
-  }
+  override val state: Observable<MainActivityViewState> =
+      events
+          .compose(actions)
+          .compose(repository.results)
+          .scan<MainActivityViewState>(MainActivityViewState.Idle, { state, result ->
+            when (result) {
+              is Result.Success -> MainActivityViewState.Success(result.data)
+              is Result.Failure -> MainActivityViewState.Failure(result.e)
+              is Result.InProgress -> MainActivityViewState.InProgress
+            }
+          })
 
+  init {
+    init()
+  }
 }
 
