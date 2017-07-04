@@ -15,12 +15,9 @@ abstract class BaseViewModel<S : BaseViewState> : ViewModel() {
   val events: BehaviorSubject<UiEvent> = BehaviorSubject.create<UiEvent>()
   val viewState: MutableLiveData<S> = MutableLiveData()
 
-  override fun onCleared() {
-    super.onCleared()
-    disposables.dispose()
-  }
+  abstract val state: Observable<S>
 
-  protected fun init(state: Observable<S>) {
+  protected fun init() {
     disposables.addAll(
         state.subscribe({ state ->
           viewState.value = state
@@ -28,5 +25,10 @@ abstract class BaseViewModel<S : BaseViewState> : ViewModel() {
           throw OnErrorNotImplementedException(throwable)
         })
     )
+  }
+
+  override fun onCleared() {
+    super.onCleared()
+    disposables.dispose()
   }
 }
