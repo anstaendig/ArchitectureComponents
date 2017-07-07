@@ -2,23 +2,34 @@ package anstaendig.com.architecturecomponents.viewmodel
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import anstaendig.com.architecturecomponents.injection.ViewModelSubcomponent
+import javax.inject.Inject
+import javax.inject.Provider
+import javax.inject.Singleton
 
+@Singleton
 class ViewModelFactory
-constructor(private val viewModelSubcomponent: ViewModelSubcomponent) : ViewModelProvider.Factory {
-
-  private val creators: Map<Class<*>, () -> ViewModel> = mapOf(
-      MainActivityViewModel::class.java to { viewModelSubcomponent.mainActivityViewModel() }
-  )
+@Inject
+constructor(private val creators: MutableMap<Class<out ViewModel>, Provider<ViewModel>>)
+  : ViewModelProvider.Factory {
 
   @Suppress("UNCHECKED_CAST")
   override fun <T : ViewModel> create(modelClass: Class<T>): T {
-    creators[modelClass]?.let {
-      try {
-        return it.invoke() as T
-      } catch (e: ClassCastException) {
-        throw RuntimeException("ViewModel ${it::class.java.simpleName} cannot be cast to ${modelClass.simpleName} type")
+    var creator: Provider<out ViewModel>? = creators[modelClass]
+    if (creator == null) {
+      for ((key, value) in creators.entries) {
+        if (modelClass.isAssignableFrom(key)) {
+          creator = value
+          break
+        }
       }
-    } ?: throw RuntimeException("Creator method for ViewModel ${modelClass.simpleName} is null")
+    }
+    if (creator == null) {
+      throw IllegalArgumentException("unknown model class " + modelClass)
+    }
+    try {
+      return creator.get() as T
+    } catch (e: Exception) {
+      throw RuntimeException(e)
+    }
   }
 }
