@@ -2,6 +2,7 @@ package anstaendig.com.architecturecomponents.viewmodel.base
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.support.annotation.CallSuper
 import anstaendig.com.architecturecomponents.ui.base.BaseViewState
 import anstaendig.com.architecturecomponents.ui.event.UiEvent
 import io.reactivex.Observable
@@ -17,7 +18,8 @@ abstract class BaseViewModel<S : BaseViewState> : ViewModel() {
 
   abstract val state: Observable<S>
 
-  protected fun init() {
+  @CallSuper
+  open fun init() {
     disposables.addAll(
         state.subscribe({ state ->
           viewState.value = state
