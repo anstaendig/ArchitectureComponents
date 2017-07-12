@@ -15,7 +15,7 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent
 
   @Inject
   protected lateinit var viewModelFactory: ViewModelProvider.Factory
-  protected val viewModel: M by lazy {
+  protected val viewModel: M by lazy(LazyThreadSafetyMode.NONE) {
     ViewModelProviders.of(this, viewModelFactory).get(viewModelClass)
   }
 
