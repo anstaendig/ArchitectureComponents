@@ -1,5 +1,6 @@
 package anstaendig.com.architecturecomponents.injection
 
+import anstaendig.com.architecturecomponents.datasource.PersonDAO
 import anstaendig.com.architecturecomponents.datasource.SwapiService
 import anstaendig.com.architecturecomponents.repository.Repository
 import anstaendig.com.architecturecomponents.repository.RepositoryImpl
@@ -12,5 +13,6 @@ class RepositoryModule {
 
   @Provides
   @Singleton
-  fun provideRepository(swapiService: SwapiService): Repository = RepositoryImpl(swapiService)
+  fun provideRepository(swapiService: SwapiService,
+                        personDAO: PersonDAO): Repository = RepositoryImpl(swapiService, personDAO)
 }

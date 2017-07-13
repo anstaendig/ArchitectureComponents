@@ -1,5 +1,9 @@
 package anstaendig.com.architecturecomponents.injection
 
+import android.arch.persistence.room.Room
+import android.content.Context
+import anstaendig.com.architecturecomponents.datasource.Database
+import anstaendig.com.architecturecomponents.datasource.PersonDAO
 import anstaendig.com.architecturecomponents.datasource.SwapiService
 import dagger.Module
 import dagger.Provides
@@ -9,6 +13,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
+
 
 @Module
 class DatasourceModule {
@@ -32,6 +37,15 @@ class DatasourceModule {
         .build()
         .create(SwapiService::class.java)
   }
+
+  @Provides
+  @Singleton
+  fun provideDatabase(context: Context): Database
+      = Room.databaseBuilder(context, Database::class.java, "database").build()
+
+  @Provides
+  @Singleton
+  fun providePersonDAO(database: Database): PersonDAO = database.personDAO()
 
   @Provides
   @Named("BaseUrl")

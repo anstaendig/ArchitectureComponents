@@ -1,25 +1,31 @@
 package anstaendig.com.architecturecomponents.datasource
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverters
 import com.squareup.moshi.Json
 import java.util.*
 
+@Entity(tableName = "persons")
+@TypeConverters(Converters::class)
 data class PersonData(
-    val name: String,
-    @Json(name = "birth_year") val birthYear: String,
-    @Json(name = "eye_color") val eyeColor: String,
-    val gender: String,
-    @Json(name = "hair_color") val hairColor: String,
-    val height: String,
-    val mass: String,
-    @Json(name = "skin_color") val skinColor: String,
-    val homeworld: String,
-    val films: List<String>,
-    val species: List<String>,
-    val starships: List<String>,
-    val vehicles: List<String>,
-    val url: String,
-    val created: String,
-    val edited: String
+    @PrimaryKey var id: String?,
+    var name: String,
+    @Json(name = "birth_year") var birthYear: String?,
+    @Json(name = "eye_color") var eyeColor: String?,
+    var gender: String?,
+    @Json(name = "hair_color") var hairColor: String?,
+    var height: String?,
+    var mass: String?,
+    @Json(name = "skin_color") var skinColor: String?,
+    var homeworld: String?,
+    var films: List<String>?,
+    var species: List<String>?,
+    var starships: List<String>?,
+    var vehicles: List<String>?,
+    var url: String?,
+    var created: String?,
+    var edited: String?
 )
 
 data class FilmData(
