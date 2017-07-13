@@ -44,9 +44,5 @@ constructor(repository: Repository) : BaseViewModel<MainActivityViewState>() {
               is Result.InProgress -> MainActivityViewState.InProgress
             }
           })
-
-  init {
-    init()
-  }
 }
 
