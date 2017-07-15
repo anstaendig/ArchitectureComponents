@@ -6,6 +6,5 @@ import io.reactivex.Observable
 
 class ExampleFragmentViewModel : BaseViewModel<ExampleFragmentViewState>() {
 
-  override val state: Observable<ExampleFragmentViewState>
-    get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+  override val state: Observable<ExampleFragmentViewState> = TODO("not implemented")
 }
