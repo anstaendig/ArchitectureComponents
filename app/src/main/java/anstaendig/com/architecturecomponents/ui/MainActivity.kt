@@ -17,7 +17,7 @@ class MainActivity : BaseActivity<MainActivityViewModel, MainActivityViewState, 
   private val messageTextView: TextView by bindView(R.id.message)
   private val editTextView: EditText by bindView(R.id.edit)
 
-  override val layoutResource = R.layout.activity_main
+  override val layoutResource = R.layout.a_main
   override val viewModelClass = MainActivityViewModel::class.java
 
   private val changeTextObservable: Observable<MainActivityUiEvent.OnTextChange>
