@@ -7,9 +7,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import anstaendig.com.architecturecomponents.App
+import anstaendig.com.architecturecomponents.ui.base.BaseActivity
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.HasSupportFragmentInjector
 
 object AppInjector {
 
@@ -40,7 +40,7 @@ object AppInjector {
 
       override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
         when (activity) {
-          is HasSupportFragmentInjector -> AndroidInjection.inject(activity)
+          is BaseActivity<*, *, *> -> AndroidInjection.inject(activity)
           is FragmentActivity -> {
             activity.supportFragmentManager.registerFragmentLifecycleCallbacks(
                 object : FragmentManager.FragmentLifecycleCallbacks() {
