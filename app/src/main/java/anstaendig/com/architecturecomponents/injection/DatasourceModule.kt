@@ -1,13 +1,14 @@
 package anstaendig.com.architecturecomponents.injection
 
+import android.arch.persistence.room.BuildConfig
 import android.arch.persistence.room.Room
 import android.content.Context
 import anstaendig.com.architecturecomponents.datasource.Database
-import anstaendig.com.architecturecomponents.datasource.PersonDAO
 import anstaendig.com.architecturecomponents.datasource.SwapiService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -20,10 +21,16 @@ class DatasourceModule {
 
   @Provides
   @Singleton
-  fun provideOkHttpClient(): OkHttpClient {
-    val okHttpClient = OkHttpClient.Builder()
-    return okHttpClient.build()
+  fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    return OkHttpClient.Builder().apply {
+      if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)
+    }.build()
   }
+
+  @Provides
+  @Singleton
+  fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor
+      = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
   @Provides
   @Singleton
@@ -45,7 +52,7 @@ class DatasourceModule {
 
   @Provides
   @Singleton
-  fun providePersonDAO(database: Database): PersonDAO = database.personDAO()
+  fun providePersonDAO(database: Database) = database.personDAO()
 
   @Provides
   @Named("BaseUrl")
