@@ -1,5 +1,6 @@
 package anstaendig.com.architecturecomponents.injection
 
+import android.arch.persistence.room.BuildConfig
 import android.arch.persistence.room.Room
 import android.content.Context
 import anstaendig.com.architecturecomponents.datasource.Database
@@ -20,8 +21,11 @@ class DatasourceModule {
 
   @Provides
   @Singleton
-  fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient
-      = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+  fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    return OkHttpClient.Builder().apply {
+      if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)
+    }.build()
+  }
 
   @Provides
   @Singleton
