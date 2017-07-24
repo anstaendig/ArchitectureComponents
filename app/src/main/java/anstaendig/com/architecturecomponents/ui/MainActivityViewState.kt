@@ -1,8 +1,7 @@
 package anstaendig.com.architecturecomponents.ui
 
-import anstaendig.com.architecturecomponents.datasource.PersonData
 import anstaendig.com.architecturecomponents.entities.Person
-import anstaendig.com.architecturecomponents.ui.base.BaseViewState
+import com.anstaendig.base.ui.BaseViewState
 
 sealed class MainActivityViewState : BaseViewState {
   object Idle : MainActivityViewState()

@@ -1,6 +1,5 @@
 package anstaendig.com.architecturecomponents.repository
 
-import anstaendig.com.architecturecomponents.datasource.PersonData
 import anstaendig.com.architecturecomponents.entities.Person
 import io.reactivex.ObservableTransformer
 

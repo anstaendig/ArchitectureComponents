@@ -1,10 +1,10 @@
-package anstaendig.com.architecturecomponents.viewmodel.base
+package com.anstaendig.base.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.CallSuper
-import anstaendig.com.architecturecomponents.ui.base.BaseViewState
-import anstaendig.com.architecturecomponents.ui.event.UiEvent
+import com.anstaendig.base.ui.BaseViewState
+import com.anstaendig.base.ui.event.UiEvent
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.exceptions.OnErrorNotImplementedException

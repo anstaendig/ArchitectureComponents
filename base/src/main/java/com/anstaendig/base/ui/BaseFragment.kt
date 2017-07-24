@@ -1,20 +1,19 @@
-package anstaendig.com.architecturecomponents.ui.base
+package com.anstaendig.base.ui
 
 import android.arch.lifecycle.*
 import android.os.Bundle
-import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import anstaendig.com.architecturecomponents.ui.event.UiEvent
-import anstaendig.com.architecturecomponents.viewmodel.base.BaseViewModel
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.anstaendig.base.viewmodel.BaseViewModel
+import com.anstaendig.base.ui.event.UiEvent
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent>
-  : AppCompatActivity(), LifecycleRegistryOwner, HasSupportFragmentInjector {
+abstract class BaseFragment<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent>
+  : Fragment(), LifecycleRegistryOwner {
 
   @Inject
   protected lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -22,9 +21,6 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent
   protected val viewModel: M by lazy(LazyThreadSafetyMode.NONE) {
     ViewModelProviders.of(this, viewModelFactory).get(viewModelClass).also { it.init() }
   }
-
-  @Inject
-  lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
   protected val disposables = CompositeDisposable()
 
@@ -36,16 +32,20 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent
   // and our views won’t receive the updates.
   @Suppress("LeakingThis")
   private val lifecycleRegistry = LifecycleRegistry(this)
+
   override fun getLifecycle() = lifecycleRegistry
 
-  @CallSuper
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(layoutResource)
+  override fun onActivityCreated(savedInstanceState: Bundle?) {
+    super.onActivityCreated(savedInstanceState)
     viewModel.viewState.observe(this, Observer<S> { state ->
       state?.let { render(it) }
     })
   }
+
+  override fun onCreateView(inflater: LayoutInflater,
+                            container: ViewGroup?,
+                            savedInstanceState: Bundle?): View
+      = inflater.inflate(layoutResource, container, false)
 
   override fun onResume() {
     super.onResume()
@@ -58,8 +58,6 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent
     disposables.dispose()
     super.onPause()
   }
-
-  override fun supportFragmentInjector() = fragmentInjector
 
   protected abstract fun render(viewState: S)
 }
