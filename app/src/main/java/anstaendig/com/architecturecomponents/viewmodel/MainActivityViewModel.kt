@@ -1,8 +1,8 @@
 package anstaendig.com.architecturecomponents.viewmodel
 
 import anstaendig.com.architecturecomponents.repository.Action
-import anstaendig.com.architecturecomponents.repository.Repository
 import anstaendig.com.architecturecomponents.repository.Result
+import anstaendig.com.architecturecomponents.repository.SWRepository
 import anstaendig.com.architecturecomponents.ui.MainActivityUiEvent
 import anstaendig.com.architecturecomponents.ui.MainActivityViewState
 import com.anstaendig.base.ui.event.UiEvent
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class MainActivityViewModel
 @Inject
-constructor(repository: Repository) : BaseViewModel<MainActivityViewState>() {
+constructor(repository: SWRepository) : BaseViewModel<MainActivityViewState>() {
 
   private val onTextChange: ObservableTransformer<MainActivityUiEvent.OnTextChange, Action.LoadPerson> = ObservableTransformer { events ->
     events.distinctUntilChanged()

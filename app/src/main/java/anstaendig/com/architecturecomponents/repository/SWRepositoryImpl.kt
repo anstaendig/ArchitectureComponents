@@ -10,10 +10,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class RepositoryImpl
+class SWRepositoryImpl
 @Inject
 constructor(private val swapiService: SwapiService,
-            private val personDAO: PersonDAO) : Repository {
+            private val personDAO: PersonDAO) : SWRepository {
 
   private val loadPerson: ObservableTransformer<Action.LoadPerson, Result> = ObservableTransformer { actions ->
     actions
