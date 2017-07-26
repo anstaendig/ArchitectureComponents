@@ -2,8 +2,8 @@ package anstaendig.com.architecturecomponents.injection
 
 import anstaendig.com.architecturecomponents.datasource.PersonDAO
 import anstaendig.com.architecturecomponents.datasource.SwapiService
-import anstaendig.com.architecturecomponents.repository.Repository
-import anstaendig.com.architecturecomponents.repository.RepositoryImpl
+import anstaendig.com.architecturecomponents.repository.SWRepositoryImpl
+import anstaendig.com.architecturecomponents.repository.SWRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -14,5 +14,5 @@ class RepositoryModule {
   @Provides
   @Singleton
   fun provideRepository(swapiService: SwapiService,
-                        personDAO: PersonDAO): Repository = RepositoryImpl(swapiService, personDAO)
+                        personDAO: PersonDAO): SWRepository = SWRepositoryImpl(swapiService, personDAO)
 }

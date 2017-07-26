@@ -1,4 +1,4 @@
-package anstaendig.com.architecturecomponents.viewmodel
+package com.anstaendig.base.viewmodel
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider

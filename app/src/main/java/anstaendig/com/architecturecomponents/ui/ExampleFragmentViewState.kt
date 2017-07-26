@@ -1,6 +1,6 @@
 package anstaendig.com.architecturecomponents.ui
 
-import anstaendig.com.architecturecomponents.ui.base.BaseViewState
+import com.anstaendig.base.ui.BaseViewState
 
 class ExampleFragmentViewState : BaseViewState {
 }

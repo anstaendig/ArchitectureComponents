@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import anstaendig.com.architecturecomponents.App
-import anstaendig.com.architecturecomponents.ui.base.BaseActivity
+import com.anstaendig.base.ui.BaseActivity
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 

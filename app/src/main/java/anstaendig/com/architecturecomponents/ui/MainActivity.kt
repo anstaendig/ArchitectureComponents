@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
 import anstaendig.com.architecturecomponents.R
-import anstaendig.com.architecturecomponents.ui.base.BaseActivity
-import anstaendig.com.architecturecomponents.ui.event.UiEvent
+import com.anstaendig.base.ui.event.UiEvent
 import anstaendig.com.architecturecomponents.util.bindView
 import anstaendig.com.architecturecomponents.viewmodel.MainActivityViewModel
+import com.anstaendig.base.ui.BaseActivity
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.Observable

@@ -1,4 +1,4 @@
-package anstaendig.com.architecturecomponents.util
+package com.anstaendig.base.util
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.LiveDataReactiveStreams
