@@ -1,4 +1,4 @@
-package com.anstaendig.base.injection
+package anstaendig.com.architecturecomponents.injection
 
 import android.arch.lifecycle.ViewModel
 import dagger.MapKey
