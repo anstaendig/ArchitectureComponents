@@ -7,17 +7,17 @@ import com.anstaendig.base.repository.BaseResult
 import io.reactivex.ObservableTransformer
 
 interface SWRepository: BaseRepository {
-  override val results: ObservableTransformer<Action, Result>
+  override val results: ObservableTransformer<SWAction, SWResult>
 }
 
-sealed class Result : BaseResult {
-  object InProgress : Result()
-  data class Success(val data: Person) : Result()
-  data class Failure(val e: String) : Result()
+sealed class SWResult : BaseResult {
+  object InProgress : SWResult()
+  data class Success(val data: Person) : SWResult()
+  data class Failure(val e: String) : SWResult()
 }
 
-sealed class Action : BaseAction {
-  data class LoadPerson(val id: String) : Action()
-  object LoadLuke : Action()
+sealed class SWAction : BaseAction {
+  data class LoadPerson(val id: String) : SWAction()
+  object LoadLuke : SWAction()
 }
 

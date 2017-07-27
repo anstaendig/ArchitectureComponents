@@ -1,7 +1,7 @@
 package anstaendig.com.architecturecomponents.viewmodel
 
-import anstaendig.com.architecturecomponents.repository.Action
-import anstaendig.com.architecturecomponents.repository.Result
+import anstaendig.com.architecturecomponents.repository.SWAction
+import anstaendig.com.architecturecomponents.repository.SWResult
 import anstaendig.com.architecturecomponents.repository.SWRepository
 import anstaendig.com.architecturecomponents.ui.MainActivityUiEvent
 import anstaendig.com.architecturecomponents.ui.MainActivityViewState
@@ -15,17 +15,17 @@ class MainActivityViewModel
 @Inject
 constructor(repository: SWRepository) : BaseViewModel<MainActivityViewState>() {
 
-  private val onTextChange: ObservableTransformer<MainActivityUiEvent.OnTextChange, Action.LoadPerson> = ObservableTransformer { events ->
+  private val onTextChange: ObservableTransformer<MainActivityUiEvent.OnTextChange, SWAction.LoadPerson> = ObservableTransformer { events ->
     events.distinctUntilChanged()
-        .map { (text) -> Action.LoadPerson(text) }
+        .map { (text) -> SWAction.LoadPerson(text) }
   }
 
-  private val onMessageClick: ObservableTransformer<MainActivityUiEvent.OnMessageClick, Action.LoadLuke> = ObservableTransformer { events ->
-    events.map { Action.LoadLuke }
+  private val onMessageClick: ObservableTransformer<MainActivityUiEvent.OnMessageClick, SWAction.LoadLuke> = ObservableTransformer { events ->
+    events.map { SWAction.LoadLuke }
   }
 
-  private val actions: ObservableTransformer<UiEvent, Action> = ObservableTransformer { events ->
-    events.publish<Action> { shared ->
+  private val actions: ObservableTransformer<UiEvent, SWAction> = ObservableTransformer { events ->
+    events.publish<SWAction> { shared ->
       Observable.merge(
           shared.ofType(MainActivityUiEvent.OnTextChange::class.java).compose(onTextChange),
           shared.ofType(MainActivityUiEvent.OnMessageClick::class.java).compose(onMessageClick)
@@ -37,11 +37,11 @@ constructor(repository: SWRepository) : BaseViewModel<MainActivityViewState>() {
       events
           .compose(actions)
           .compose(repository.results)
-          .scan<MainActivityViewState>(MainActivityViewState.Idle, { state, result ->
+          .scan<MainActivityViewState>(MainActivityViewState.Idle, { _, result ->
             when (result) {
-              is Result.Success -> MainActivityViewState.Success(result.data)
-              is Result.Failure -> MainActivityViewState.Failure(result.e)
-              is Result.InProgress -> MainActivityViewState.InProgress
+              is SWResult.Success -> MainActivityViewState.Success(result.data)
+              is SWResult.Failure -> MainActivityViewState.Failure(result.e)
+              is SWResult.InProgress -> MainActivityViewState.InProgress
             }
           })
 }
