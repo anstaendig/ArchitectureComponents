@@ -1,6 +1,5 @@
 package anstaendig.com.architecturecomponents.repository
 
-import android.util.Log
 import anstaendig.com.architecturecomponents.datasource.PersonDAO
 import anstaendig.com.architecturecomponents.datasource.SwapiService
 import anstaendig.com.architecturecomponents.datasource.toPerson
@@ -15,7 +14,7 @@ class SWRepositoryImpl
 constructor(private val swapiService: SwapiService,
             private val personDAO: PersonDAO) : SWRepository {
 
-  private val loadPerson: ObservableTransformer<Action.LoadPerson, Result> = ObservableTransformer { actions ->
+  private val loadPerson: ObservableTransformer<SWAction.LoadPerson, SWResult> = ObservableTransformer { actions ->
     actions
         .flatMap { (id) ->
           Observable.merge(
@@ -24,34 +23,33 @@ constructor(private val swapiService: SwapiService,
               swapiService.loadPerson(id)
                   .doOnSuccess({ personDAO.insert(it.apply { this.id = id }) })
                   .toObservable()
-          ).map<Result> { personData -> Result.Success(personData.toPerson()) }
+          ).map<SWResult> { personData -> SWResult.Success(personData.toPerson()) }
               .distinctUntilChanged()
-              .doOnNext({ Log.d("TAG", "STOP $it") })
               .subscribeOn(Schedulers.io())
-              .startWith(Result.InProgress)
-              .onErrorReturn { e -> Result.Failure(e.message!!) }
+              .startWith(SWResult.InProgress)
+              .onErrorReturn { e -> SWResult.Failure(e.message!!) }
         }.observeOn(AndroidSchedulers.mainThread())
   }
 
-  private val loadLuke: ObservableTransformer<Action.LoadLuke, Result> = ObservableTransformer { actions ->
+  private val loadLuke: ObservableTransformer<SWAction.LoadLuke, SWResult> = ObservableTransformer { actions ->
     actions
         .flatMap { _ ->
           swapiService
               .loadPerson("1")
               .subscribeOn(Schedulers.io())
               .toObservable()
-              .map<Result> { personData -> Result.Success(personData.toPerson()) }
-              .onErrorReturn { e -> Result.Failure(e.message!!) }
-              .startWith(Result.InProgress)
+              .map<SWResult> { personData -> SWResult.Success(personData.toPerson()) }
+              .onErrorReturn { e -> SWResult.Failure(e.message!!) }
+              .startWith(SWResult.InProgress)
         }
         .observeOn(AndroidSchedulers.mainThread())
   }
 
-  override val results: ObservableTransformer<Action, Result> = ObservableTransformer { events ->
+  override val results: ObservableTransformer<SWAction, SWResult> = ObservableTransformer { events ->
     events.publish { shared ->
       Observable.merge(
-          shared.ofType(Action.LoadPerson::class.java).compose(loadPerson),
-          shared.ofType(Action.LoadLuke::class.java).compose(loadLuke)
+          shared.ofType(SWAction.LoadPerson::class.java).compose(loadPerson),
+          shared.ofType(SWAction.LoadLuke::class.java).compose(loadLuke)
       )
     }
   }
