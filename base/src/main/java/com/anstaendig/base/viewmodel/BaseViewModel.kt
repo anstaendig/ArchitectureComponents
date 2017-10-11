@@ -12,25 +12,25 @@ import io.reactivex.subjects.BehaviorSubject
 
 abstract class BaseViewModel<S : BaseViewState> : ViewModel() {
 
-  val disposables = CompositeDisposable()
-  val events: BehaviorSubject<UiEvent> = BehaviorSubject.create<UiEvent>()
-  val viewState: MutableLiveData<S> = MutableLiveData()
+    val disposables = CompositeDisposable()
+    val events: BehaviorSubject<UiEvent> = BehaviorSubject.create<UiEvent>()
+    val viewState: MutableLiveData<S> = MutableLiveData()
 
-  abstract val state: Observable<S>
+    abstract val state: Observable<S>
 
-  @CallSuper
-  open fun init() {
-    disposables.addAll(
-        state.subscribe({ state ->
-          viewState.value = state
-        }, { throwable ->
-          throw OnErrorNotImplementedException(throwable)
-        })
-    )
-  }
+    @CallSuper
+    open fun init() {
+        disposables.addAll(
+                state.subscribe({ state ->
+                    viewState.value = state
+                }) { throwable ->
+                    throw OnErrorNotImplementedException(throwable)
+                }
+        )
+    }
 
-  override fun onCleared() {
-    super.onCleared()
-    disposables.dispose()
-  }
+    override fun onCleared() {
+        disposables.dispose()
+        super.onCleared()
+    }
 }
