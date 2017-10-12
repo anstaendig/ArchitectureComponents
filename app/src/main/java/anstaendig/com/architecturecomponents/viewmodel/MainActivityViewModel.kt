@@ -15,34 +15,37 @@ class MainActivityViewModel
 @Inject
 constructor(repository: SWRepository) : BaseViewModel<MainActivityViewState>() {
 
-  private val onTextChange: ObservableTransformer<MainActivityUiEvent.OnTextChange, SWAction.LoadPerson> = ObservableTransformer { events ->
-    events.distinctUntilChanged()
-        .map { (text) -> SWAction.LoadPerson(text) }
-  }
-
-  private val onMessageClick: ObservableTransformer<MainActivityUiEvent.OnMessageClick, SWAction.LoadLuke> = ObservableTransformer { events ->
-    events.map { SWAction.LoadLuke }
-  }
-
-  private val actions: ObservableTransformer<UiEvent, SWAction> = ObservableTransformer { events ->
-    events.publish<SWAction> { shared ->
-      Observable.merge(
-          shared.ofType(MainActivityUiEvent.OnTextChange::class.java).compose(onTextChange),
-          shared.ofType(MainActivityUiEvent.OnMessageClick::class.java).compose(onMessageClick)
-      )
+    private val onTextChange: ObservableTransformer<MainActivityUiEvent.OnTextChange, SWAction.LoadPerson> = ObservableTransformer { events ->
+        events.distinctUntilChanged()
+                .map { (text) -> SWAction.LoadPerson(text) }
     }
-  }
 
-  override val state: Observable<MainActivityViewState> =
-      events
-          .compose(actions)
-          .compose(repository.results)
-          .scan<MainActivityViewState>(MainActivityViewState.Idle, { _, result ->
-            when (result) {
-              is SWResult.Success -> MainActivityViewState.Success(result.data)
-              is SWResult.Failure -> MainActivityViewState.Failure(result.e)
-              is SWResult.InProgress -> MainActivityViewState.InProgress
-            }
-          })
+    private val onMessageClick: ObservableTransformer<MainActivityUiEvent.OnMessageClick, SWAction.LoadLuke> = ObservableTransformer { events ->
+        events.map { SWAction.LoadLuke }
+    }
+
+    private val actions: ObservableTransformer<UiEvent, SWAction> = ObservableTransformer { events ->
+        events.publish<SWAction> { shared ->
+            Observable.merge(
+                    shared.ofType(MainActivityUiEvent.OnTextChange::class.java).compose(onTextChange),
+                    shared.ofType(MainActivityUiEvent.OnMessageClick::class.java).compose(onMessageClick)
+            )
+        }
+    }
+
+    override val state: Observable<MainActivityViewState> =
+            events
+                    .compose(actions)
+                    .compose(repository.results)
+                    .scan<MainActivityViewState>(
+                            MainActivityViewState.Idle,
+                            { _, result ->
+                                when (result) {
+                                    is SWResult.Success -> MainActivityViewState.Success(result.data)
+                                    is SWResult.Failure -> MainActivityViewState.Failure(result.e)
+                                    is SWResult.InProgress -> MainActivityViewState.InProgress
+                                }
+                            }
+                    )
 }
 

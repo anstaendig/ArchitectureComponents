@@ -7,17 +7,17 @@ import com.anstaendig.base.ui.BaseFragment
 import io.reactivex.Observable
 
 class ExampleFragment
-  : BaseFragment<ExampleFragmentViewModel, ExampleFragmentViewState, ExampleFragmentUiEvent>() {
+    : BaseFragment<ExampleFragmentViewModel, ExampleFragmentViewState, ExampleFragmentUiEvent>() {
 
-  override val viewModelClass = ExampleFragmentViewModel::class.java
+    override val viewModelClass = ExampleFragmentViewModel::class.java
 
-  override val events: Observable<ExampleFragmentUiEvent> = TODO("not implemented")
+    override val events: Observable<ExampleFragmentUiEvent> = TODO("not implemented")
 
-  override val layoutResource = R.layout.f_example
+    override val layoutResource = R.layout.f_example
 
-  override fun render(viewState: ExampleFragmentViewState) {
-    TODO("not implemented")
-  }
+    override fun render(viewState: ExampleFragmentViewState) {
+        TODO("not implemented")
+    }
 }
 
 sealed class ExampleFragmentUiEvent : UiEvent()

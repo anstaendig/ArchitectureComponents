@@ -13,51 +13,48 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 abstract class BaseFragment<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent>
-  : Fragment(), LifecycleRegistryOwner {
+    : Fragment() {
 
-  @Inject
-  protected lateinit var viewModelFactory: ViewModelProvider.Factory
-  protected abstract val viewModelClass: Class<M>
-  protected val viewModel: M by lazy(LazyThreadSafetyMode.NONE) {
-    ViewModelProviders.of(this, viewModelFactory).get(viewModelClass).also { it.init() }
-  }
+    @Inject
+    protected lateinit var viewModelFactory: ViewModelProvider.Factory
+    protected abstract val viewModelClass: Class<M>
+    protected val viewModel: M by lazy(LazyThreadSafetyMode.NONE) {
+        ViewModelProviders.of(this, viewModelFactory).get(viewModelClass).also { it.init() }
+    }
 
-  protected val disposables = CompositeDisposable()
+    protected val disposables = CompositeDisposable()
 
-  protected abstract val events: Observable<T>
-  protected abstract val layoutResource: Int
+    protected abstract val events: Observable<T>
+    protected abstract val layoutResource: Int
 
-  // We have to hold a strong reference to the instance of LifecycleRegistry, otherwise GC will
-  // collect it and LifecycleObserver of LiveData won’t see the active observers from LifecycleOwner
-  // and our views won’t receive the updates.
-  @Suppress("LeakingThis")
-  private val lifecycleRegistry = LifecycleRegistry(this)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.viewState.observe(
+                this,
+                Observer<S> { state ->
+                    state?.let { render(it) }
+                }
+        )
+    }
 
-  override fun getLifecycle() = lifecycleRegistry
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?): View = inflater.inflate(layoutResource, container, false)
 
-  override fun onActivityCreated(savedInstanceState: Bundle?) {
-    super.onActivityCreated(savedInstanceState)
-    viewModel.viewState.observe(this, Observer<S> { state ->
-      state?.let { render(it) }
-    })
-  }
+    override fun onResume() {
+        super.onResume()
+        disposables.add(
+                events.subscribe { event ->
+                    viewModel.events.onNext(event)
+                }
+        )
+    }
 
-  override fun onCreateView(inflater: LayoutInflater,
-                            container: ViewGroup?,
-                            savedInstanceState: Bundle?): View
-      = inflater.inflate(layoutResource, container, false)
+    override fun onPause() {
+        disposables.dispose()
+        super.onPause()
+    }
 
-  override fun onResume() {
-    super.onResume()
-    disposables.add(events.subscribe { event ->
-      viewModel.events.onNext(event)
-    })
-  }
-
-  override fun onPause() {
-    disposables.dispose()
-    super.onPause()
-  }
-
-  protected abstract fun render(viewState: S)
+    protected abstract fun render(viewState: S)
 }

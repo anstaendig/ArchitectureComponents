@@ -9,10 +9,10 @@ import io.reactivex.Flowable
 @Dao
 interface PersonDAO {
 
-  @Query("SELECT * FROM persons WHERE id LIKE :personId")
-  fun loadById(personId: String): Flowable<PersonData>
+    @Query("SELECT * FROM persons WHERE id LIKE :personId")
+    fun loadById(personId: String): Flowable<PersonData>
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
-  fun insert(person: PersonData)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(person: PersonData)
 
 }

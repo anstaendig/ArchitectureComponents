@@ -7,14 +7,14 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module(includes = arrayOf(
-    ViewModelModule::class
+        ViewModelModule::class
 ))
 class AppModule {
 
-  @Provides
-  @Singleton
-  fun providesContext(application: Application): Context {
-    return application
-  }
+    @Provides
+    @Singleton
+    fun providesContext(application: Application): Context {
+        return application
+    }
 
 }

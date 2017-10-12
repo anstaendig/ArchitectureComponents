@@ -6,5 +6,5 @@ import io.reactivex.Observable
 
 class ExampleFragmentViewModel : BaseViewModel<ExampleFragmentViewState>() {
 
-  override val state: Observable<ExampleFragmentViewState> = TODO("not implemented")
+    override val state: Observable<ExampleFragmentViewState> = TODO("not implemented")
 }

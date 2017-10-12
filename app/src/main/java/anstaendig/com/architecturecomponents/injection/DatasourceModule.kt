@@ -19,42 +19,42 @@ import javax.inject.Singleton
 @Module
 class DatasourceModule {
 
-  @Provides
-  @Singleton
-  fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-    return OkHttpClient.Builder().apply {
-      if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)
-    }.build()
-  }
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        return OkHttpClient.Builder().apply {
+            if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)
+        }.build()
+    }
 
-  @Provides
-  @Singleton
-  fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor
-      = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    @Provides
+    @Singleton
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor
+            = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-  @Provides
-  @Singleton
-  fun provideSwapiService(okHttpClient: OkHttpClient,
-                          @Named("BaseUrl") baseUrl: String): SwapiService {
-    return Retrofit.Builder()
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(MoshiConverterFactory.create())
-        .baseUrl(baseUrl)
-        .client(okHttpClient)
-        .build()
-        .create(SwapiService::class.java)
-  }
+    @Provides
+    @Singleton
+    fun provideSwapiService(okHttpClient: OkHttpClient,
+                            @Named("BaseUrl") baseUrl: String): SwapiService {
+        return Retrofit.Builder()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create())
+                .baseUrl(baseUrl)
+                .client(okHttpClient)
+                .build()
+                .create(SwapiService::class.java)
+    }
 
-  @Provides
-  @Singleton
-  fun provideDatabase(context: Context): Database
-      = Room.databaseBuilder(context, Database::class.java, "database").build()
+    @Provides
+    @Singleton
+    fun provideDatabase(context: Context): Database
+            = Room.databaseBuilder(context, Database::class.java, "database").build()
 
-  @Provides
-  @Singleton
-  fun providePersonDAO(database: Database) = database.personDAO()
+    @Provides
+    @Singleton
+    fun providePersonDAO(database: Database) = database.personDAO()
 
-  @Provides
-  @Named("BaseUrl")
-  fun proveBaseUrl() = "http://swapi.co/api/"
+    @Provides
+    @Named("BaseUrl")
+    fun proveBaseUrl() = "http://swapi.co/api/"
 }

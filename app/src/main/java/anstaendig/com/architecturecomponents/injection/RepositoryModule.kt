@@ -11,8 +11,10 @@ import javax.inject.Singleton
 @Module
 class RepositoryModule {
 
-  @Provides
-  @Singleton
-  fun provideRepository(swapiService: SwapiService,
-                        personDAO: PersonDAO): SWRepository = SWRepositoryImpl(swapiService, personDAO)
+    @Provides
+    @Singleton
+    fun provideRepository(
+            swapiService: SwapiService,
+            personDAO: PersonDAO
+    ): SWRepository = SWRepositoryImpl(swapiService, personDAO)
 }
