@@ -1,8 +1,8 @@
 <resources>
-  <string name="app_name">ArchitectureComponents</string>
-  <string name="title_activity_main">MainActivity</string>
-  <string name="title_home">Home</string>
-  <string name="title_dashboard">Dashboard</string>
-  <string name="title_notifications">Notifications</string>
-  <string name="f_example_header_text">This is a example fragment.</string>
+    <string name="app_name">ArchitectureComponents</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="f_example_header_text">This is a example fragment.</string>
 </resources>

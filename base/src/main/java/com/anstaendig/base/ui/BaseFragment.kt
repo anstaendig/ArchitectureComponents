@@ -1,13 +1,15 @@
 package com.anstaendig.base.ui
 
-import android.arch.lifecycle.*
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.anstaendig.base.viewmodel.BaseViewModel
 import com.anstaendig.base.ui.event.UiEvent
+import com.anstaendig.base.viewmodel.BaseViewModel
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -46,7 +48,7 @@ abstract class BaseFragment<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent
         super.onResume()
         disposables.add(
                 events.subscribe { event ->
-                    viewModel.events.onNext(event)
+                    viewModel.events.accept(event)
                 }
         )
     }

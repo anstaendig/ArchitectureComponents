@@ -6,7 +6,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId 'anstaendig.com.architecturecomponents'
+        applicationId 'com.anstaendig.architecturecomponents'
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
@@ -27,30 +27,33 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':base')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
+    // Android framework
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support:design:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
+    // Lifecycle components
     compile 'android.arch.lifecycle:runtime:1.0.0'
     compile 'android.arch.lifecycle:extensions:1.0.0-alpha9-1'
     compile 'android.arch.lifecycle:reactivestreams:1.0.0-alpha9-1'
     kapt 'android.arch.lifecycle:compiler:1.0.0-alpha9-1'
 
+    // Room
     compile 'android.arch.persistence.room:runtime:1.0.0-alpha9-1'
     compile "android.arch.persistence.room:rxjava2:1.0.0-alpha9-1"
     kapt 'android.arch.persistence.room:compiler:1.0.0-alpha9-1'
 
+    // Dagger 2
     compile 'com.google.dagger:dagger:2.11'
     kapt 'com.google.dagger:dagger-compiler:2.11'
     compile 'com.google.dagger:dagger-android:2.11'
     compile 'com.google.dagger:dagger-android-support:2.11'
     kapt 'com.google.dagger:dagger-android-processor:2.11'
 
+    // Retrofit, OkHttp, Moshi
     compile('com.squareup.retrofit2:retrofit:2.3.0') {
         exclude module: 'okhttp'
     }
@@ -61,10 +64,15 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+    // Rx
+    compile 'io.reactivex.rxjava2:rxjava:2.1.4'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-
+    compile 'com.jakewharton.rxrelay2:rxrelay:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
 
+    // Tests
     testCompile 'junit:junit:4.12'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
 }

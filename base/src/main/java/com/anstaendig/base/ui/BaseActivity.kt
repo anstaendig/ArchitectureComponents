@@ -1,12 +1,14 @@
 package com.anstaendig.base.ui
 
-import android.arch.lifecycle.*
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import com.anstaendig.base.viewmodel.BaseViewModel
 import com.anstaendig.base.ui.event.UiEvent
+import com.anstaendig.base.viewmodel.BaseViewModel
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.Observable
@@ -47,7 +49,7 @@ abstract class BaseActivity<M : BaseViewModel<S>, S : BaseViewState, T : UiEvent
         super.onResume()
         disposables.add(
                 events.subscribe { event ->
-                    viewModel.events.onNext(event)
+                    viewModel.events.accept(event)
                 }
         )
     }
