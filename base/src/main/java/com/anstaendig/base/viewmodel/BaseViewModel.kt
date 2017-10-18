@@ -5,15 +5,15 @@ import android.arch.lifecycle.ViewModel
 import android.support.annotation.CallSuper
 import com.anstaendig.base.ui.BaseViewState
 import com.anstaendig.base.ui.event.UiEvent
+import com.jakewharton.rxrelay2.PublishRelay
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.exceptions.OnErrorNotImplementedException
-import io.reactivex.subjects.BehaviorSubject
 
 abstract class BaseViewModel<S : BaseViewState> : ViewModel() {
 
     val disposables = CompositeDisposable()
-    val events: BehaviorSubject<UiEvent> = BehaviorSubject.create<UiEvent>()
+    val events: PublishRelay<UiEvent> = PublishRelay.create()
     val viewState: MutableLiveData<S> = MutableLiveData()
 
     abstract val state: Observable<S>
