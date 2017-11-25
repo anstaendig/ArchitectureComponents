@@ -1,6 +1,5 @@
 package com.anstaendig.architecturecomponents.repository
 
-import com.anstaendig.architecturecomponents.datasource.PersonDAO
 import com.anstaendig.architecturecomponents.datasource.SwapiService
 import com.anstaendig.architecturecomponents.datasource.toPerson
 import io.reactivex.Observable

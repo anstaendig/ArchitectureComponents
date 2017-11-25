@@ -10,9 +10,9 @@ import dagger.Module
 @Module
 abstract class RepositoryModule {
 
-    @Binds
-    abstract fun bindSwapiRepository(swRepositoryImpl: SWRepositoryImpl): SWRepository
+  @Binds
+  abstract fun bindSwapiRepository(swRepositoryImpl: SWRepositoryImpl): SWRepository
 
-    @Binds
-    abstract fun bindMarvelRepository(marvelRepositoryImpl: MarvelRepositoryImpl): MarvelRepository
+  @Binds
+  abstract fun bindMarvelRepository(marvelRepositoryImpl: MarvelRepositoryImpl): MarvelRepository
 }

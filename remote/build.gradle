@@ -1,0 +1,26 @@
+apply plugin: 'kotlin'
+
+dependencies {
+  def dependencies = rootProject.ext.dependencies
+  def testDependencies = rootProject.ext.testDependencies
+
+  implementation dependencies.kotlin
+  implementation(dependencies.retrofit) {
+    exclude module: 'okhttp'
+  }
+  implementation dependencies.retrofitConverterMoshi
+  implementation dependencies.retrofitAdapterRxJava2
+  implementation dependencies.moshi
+  implementation dependencies.moshiAdapters
+  implementation dependencies.okHttp
+  implementation dependencies.okHttpLoggingInterceptor
+  implementation dependencies.javaxInject
+
+  testImplementation testDependencies.jUnit
+  testImplementation testDependencies.assertJ
+  testImplementation testDependencies.mockito
+  testImplementation testDependencies.mockitoKotlin
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

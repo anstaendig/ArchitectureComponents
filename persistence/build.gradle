@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+  def globalConfiguration = rootProject.extensions.getByName("ext")
+
+  compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+  buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
+
+  defaultConfig {
+    minSdkVersion globalConfiguration["androidMinSdkVersion"]
+    targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
+  }
+}
+
+dependencies {
+  def dependencies = rootProject.ext.dependencies
+  def testDependencies = rootProject.ext.testDependencies
+
+  implementation dependencies.kotlin
+  implementation dependencies.javaxInject
+  implementation dependencies.room
+  implementation dependencies.roomRxJava2
+  kapt dependencies.roomCompiler
+}
+

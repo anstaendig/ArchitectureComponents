@@ -12,13 +12,14 @@ import kotlin.reflect.KClass
 
 @Module
 abstract class ViewModelModule {
-    @Binds
-    @IntoMap
-    @ViewModelKey(MainActivityViewModel::class)
-    abstract fun bindMainActivityViewModel(viewModel: MainActivityViewModel): ViewModel
 
-    @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+  @Binds
+  abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+
+  @Binds
+  @IntoMap
+  @ViewModelKey(MainActivityViewModel::class)
+  abstract fun bindMainActivityViewModel(viewModel: MainActivityViewModel): ViewModel
 }
 
 @MustBeDocumented
@@ -26,4 +27,3 @@ abstract class ViewModelModule {
 @Retention(AnnotationRetention.RUNTIME)
 @MapKey
 annotation class ViewModelKey(val value: KClass<out ViewModel>)
-

@@ -5,8 +5,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class FragmentBuildersModule {
+abstract class FragmentContributionModule {
 
-    @ContributesAndroidInjector
-    abstract fun contributeExampleFragment(): ExampleFragment
+  @ContributesAndroidInjector
+  abstract fun contributeExampleFragment(): ExampleFragment
 }

@@ -1,22 +1,12 @@
 package com.anstaendig.architecturecomponents
 
-import android.app.Activity
-import android.app.Application
-import com.anstaendig.architecturecomponents.injection.AppInjector
+import com.anstaendig.architecturecomponents.injection.DaggerAppComponent
 import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import javax.inject.Inject
+import dagger.android.DaggerApplication
 
-class App : Application(), HasActivityInjector {
+class App : DaggerApplication() {
 
-  @Inject
-  lateinit var activityInjector: DispatchingAndroidInjector<Activity>
-
-  override fun onCreate() {
-    super.onCreate()
-    AppInjector.init(this)
+  override fun applicationInjector(): AndroidInjector<out @JvmSuppressWildcards DaggerApplication> {
+    return DaggerAppComponent.builder().create(this)
   }
-
-  override fun activityInjector(): AndroidInjector<Activity> = activityInjector
 }

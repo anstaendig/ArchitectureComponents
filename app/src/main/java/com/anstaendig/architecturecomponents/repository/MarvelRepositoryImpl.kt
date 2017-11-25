@@ -3,7 +3,6 @@ package com.anstaendig.architecturecomponents.repository
 import com.anstaendig.architecturecomponents.datasource.CharacterData
 import com.anstaendig.architecturecomponents.datasource.MarvelError
 import com.anstaendig.architecturecomponents.datasource.MarvelResultWrapper
-import com.anstaendig.architecturecomponents.datasource.MarvelService
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
