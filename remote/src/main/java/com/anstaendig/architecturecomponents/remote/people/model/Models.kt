@@ -2,7 +2,7 @@ package com.anstaendig.architecturecomponents.remote.people.model
 
 import com.squareup.moshi.Json
 
-data class PersonModel(
+data class PersonRemoteModel(
     val id: String,
     val name: String,
     @Json(name = "birth_year") val birthYear: String,
