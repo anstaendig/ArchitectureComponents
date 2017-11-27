@@ -1,7 +1,7 @@
 package com.anstaendig.architecturecomponents.ui
 
 import com.anstaendig.architecturecomponents.entities.Person
-import com.anstaendig.base.ui.BaseViewState
+import com.anstaendig.architecturecomponents.base.ui.BaseViewState
 
 sealed class MainActivityViewState : BaseViewState {
     object Idle : MainActivityViewState()

@@ -2,9 +2,9 @@ package com.anstaendig.architecturecomponents.repository
 
 import com.anstaendig.architecturecomponents.datasource.MarvelError
 import com.anstaendig.architecturecomponents.datasource.MarvelResultWrapper
-import com.anstaendig.base.repository.BaseAction
-import com.anstaendig.base.repository.BaseRepository
-import com.anstaendig.base.repository.BaseResult
+import com.anstaendig.architecturecomponents.base.repository.BaseAction
+import com.anstaendig.architecturecomponents.base.repository.BaseRepository
+import com.anstaendig.architecturecomponents.base.repository.BaseResult
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 

@@ -1,9 +1,9 @@
 package com.anstaendig.architecturecomponents.repository
 
 import com.anstaendig.architecturecomponents.entities.Person
-import com.anstaendig.base.repository.BaseAction
-import com.anstaendig.base.repository.BaseRepository
-import com.anstaendig.base.repository.BaseResult
+import com.anstaendig.architecturecomponents.base.repository.BaseAction
+import com.anstaendig.architecturecomponents.base.repository.BaseRepository
+import com.anstaendig.architecturecomponents.base.repository.BaseResult
 import io.reactivex.ObservableTransformer
 
 interface SWRepository : BaseRepository {

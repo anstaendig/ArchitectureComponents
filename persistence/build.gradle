@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
+
   def globalConfiguration = rootProject.extensions.getByName("ext")
 
   compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
@@ -20,8 +21,11 @@ android {
 }
 
 dependencies {
+
   def dependencies = rootProject.ext.dependencies
   def testDependencies = rootProject.ext.testDependencies
+
+  implementation project(path: ':data')
 
   implementation dependencies.kotlin
   implementation dependencies.javaxInject

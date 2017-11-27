@@ -7,8 +7,8 @@ import android.widget.TextView
 import com.anstaendig.architecturecomponents.R
 import com.anstaendig.architecturecomponents.util.bindView
 import com.anstaendig.architecturecomponents.viewmodel.MainActivityViewModel
-import com.anstaendig.base.ui.BaseActivity
-import com.anstaendig.base.ui.event.UiEvent
+import com.anstaendig.architecturecomponents.base.ui.BaseActivity
+import com.anstaendig.architecturecomponents.base.ui.event.UiEvent
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.Observable

@@ -1,11 +1,7 @@
-package com.anstaendig.architecturecomponents.persistence.people.model
+package com.anstaendig.architecturecomponents.data.people.model
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-
-@Entity(tableName = "people")
-data class PersonPersistenceModel(
-    @PrimaryKey val id: String,
+data class PersonDataModel(
+    val id: String,
     val name: String,
     val birthYear: String,
     val eyeColor: String,

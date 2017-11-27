@@ -5,19 +5,9 @@ dependencies {
   def dependencies = rootProject.ext.dependencies
   def testDependencies = rootProject.ext.testDependencies
 
-  implementation project(path: ':data')
-
   implementation dependencies.kotlin
   implementation dependencies.javaxInject
-  implementation(dependencies.retrofit) {
-    exclude module: 'okhttp'
-  }
-  implementation dependencies.retrofitConverterMoshi
-  implementation dependencies.retrofitAdapterRxJava2
-  implementation dependencies.moshi
-  implementation dependencies.moshiAdapters
-  implementation dependencies.okHttp
-  implementation dependencies.okHttpLoggingInterceptor
+  implementation dependencies.rxJava
 
   testImplementation testDependencies.jUnit
   testImplementation testDependencies.assertJ

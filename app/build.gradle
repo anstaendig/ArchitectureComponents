@@ -3,18 +3,21 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-  compileSdkVersion 26
-  buildToolsVersion '26.0.2'
+
+  def globalConfiguration = rootProject.extensions.getByName("ext")
+
+  compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+  buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
+
   defaultConfig {
     applicationId 'com.anstaendig.architecturecomponents'
-    minSdkVersion 21
-    targetSdkVersion 26
+    minSdkVersion globalConfiguration["androidMinSdkVersion"]
+    targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
     versionCode 1
     versionName '1.0'
     testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-    vectorDrawables.useSupportLibrary = true
-    resConfigs "en"
   }
+
   buildTypes {
     release {
       minifyEnabled true
@@ -22,62 +25,47 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
+  }
 }
 
 dependencies {
+
   def dependencies = rootProject.ext.dependencies
   def testDependencies = rootProject.ext.testDependencies
 
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
-  implementation project(':base')
   implementation project(':remote')
+  implementation project(':persistence')
 
   // Kotlin
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  implementation dependencies.kotlin
 
   // Android framework
-  compile 'com.android.support:appcompat-v7:26.1.0'
-  compile 'com.android.support:design:26.1.0'
-  compile 'com.android.support.constraint:constraint-layout:1.0.2'
+  implementation dependencies.appCompat
+  implementation dependencies.constraintLayout
 
   // Lifecycle components
-  compile 'android.arch.lifecycle:runtime:1.0.0'
-  compile 'android.arch.lifecycle:extensions:1.0.0-alpha9-1'
-  compile 'android.arch.lifecycle:reactivestreams:1.0.0-alpha9-1'
-  kapt 'android.arch.lifecycle:compiler:1.0.0-alpha9-1'
-
-//  // Room
-//  compile 'android.arch.persistence.room:runtime:1.0.0-alpha9-1'
-//  compile "android.arch.persistence.room:rxjava2:1.0.0-alpha9-1"
-//  kapt 'android.arch.persistence.room:compiler:1.0.0-alpha9-1'
+  implementation dependencies.lifecycleExtensions
 
   // Dagger 2
-  compile 'com.google.dagger:dagger:2.11'
-  kapt 'com.google.dagger:dagger-compiler:2.11'
-  compile 'com.google.dagger:dagger-android:2.11'
-  compile 'com.google.dagger:dagger-android-support:2.11'
-  kapt 'com.google.dagger:dagger-android-processor:2.11'
-
-//  // Retrofit, OkHttp, Moshi
-//  compile('com.squareup.retrofit2:retrofit:2.3.0') {
-//    exclude module: 'okhttp'
-//  }
-//  compile 'com.squareup.retrofit2:converter-moshi:2.3.0'
-//  compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-//  compile 'com.squareup.moshi:moshi:1.5.0'
-//
-//  compile 'com.squareup.okhttp3:okhttp:3.8.1'
-//  compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+  implementation dependencies.dagger
+  kapt dependencies.daggerCompiler
+  implementation dependencies.daggerAndroid
+  implementation dependencies.daggerAndroidSupport
+  kapt dependencies.daggerAndroidProcessor
 
   // Rx
-  compile 'io.reactivex.rxjava2:rxjava:2.1.4'
-  compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-  compile 'com.jakewharton.rxrelay2:rxrelay:2.0.0'
-  compile 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
+  implementation dependencies.rxJava
+  implementation dependencies.rxAndroid
+  implementation dependencies.rxRelay
+  implementation dependencies.rxBindingsKotlin
 
   // Tests
-  testCompile 'junit:junit:4.12'
-  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+  testImplementation testDependencies.jUnit
+  androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
 }

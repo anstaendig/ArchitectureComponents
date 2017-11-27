@@ -2,8 +2,8 @@ package com.anstaendig.architecturecomponents.ui
 
 import com.anstaendig.architecturecomponents.R
 import com.anstaendig.architecturecomponents.viewmodel.ExampleFragmentViewModel
-import com.anstaendig.base.ui.BaseFragment
-import com.anstaendig.base.ui.event.UiEvent
+import com.anstaendig.architecturecomponents.base.ui.BaseFragment
+import com.anstaendig.architecturecomponents.base.ui.event.UiEvent
 import io.reactivex.Observable
 
 class ExampleFragment

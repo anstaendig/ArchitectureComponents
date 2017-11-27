@@ -1,4 +1,4 @@
-package com.anstaendig.base.ui
+package com.anstaendig.architecturecomponents.base.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
@@ -8,8 +8,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.anstaendig.base.ui.event.UiEvent
-import com.anstaendig.base.viewmodel.BaseViewModel
+import com.anstaendig.architecturecomponents.base.ui.event.UiEvent
+import com.anstaendig.architecturecomponents.base.viewmodel.BaseViewModel
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject

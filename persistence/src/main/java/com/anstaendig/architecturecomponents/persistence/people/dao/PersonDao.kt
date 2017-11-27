@@ -4,15 +4,16 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.anstaendig.architecturecomponents.persistence.people.model.PersonData
+import com.anstaendig.architecturecomponents.persistence.people.QUERY_PERSON_BY_ID
+import com.anstaendig.architecturecomponents.persistence.people.model.PersonPersistenceModel
 import io.reactivex.Flowable
 
 @Dao
 interface PersonDao {
 
-  @Query("SELECT * FROM persons WHERE id LIKE :personId")
-  fun getPersonById(personId: String): Flowable<PersonData>
+  @Query(QUERY_PERSON_BY_ID)
+  fun getPersonById(personId: String): Flowable<PersonPersistenceModel>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  fun insertPerson(person: PersonData)
+  fun insertPerson(person: PersonPersistenceModel)
 }

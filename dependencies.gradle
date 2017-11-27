@@ -1,19 +1,16 @@
 ext {
   // Android Build Configuration
-  androidBuildToolsVersion = '26.0.2'
+  androidBuildToolsVersion = '26.0.3'
   androidMinSdkVersion = 21
   androidTargetSdkVersion = 26
   androidCompileSdkVersion = 26
-
-  // Kotlin
-  kotlinVersion = '1.1.60'
 
   // Android Support Libraries
   supportLibraryVersion = '26.1.0'
   constraintLayoutVersion = '1.1.0-beta3'
 
   // Android Architecture Components
-  architectureComponentsVersion = '1.0.0-rc1'
+  architectureComponentsVersion = '1.0.0'
 
   // JSR
   javaxInjectVersion = '1'

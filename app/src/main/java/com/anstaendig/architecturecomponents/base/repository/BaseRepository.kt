@@ -1,4 +1,4 @@
-package com.anstaendig.base.repository
+package com.anstaendig.architecturecomponents.base.repository
 
 import io.reactivex.ObservableTransformer
 

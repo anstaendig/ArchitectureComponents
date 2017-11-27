@@ -5,8 +5,8 @@ import com.anstaendig.architecturecomponents.repository.SWRepository
 import com.anstaendig.architecturecomponents.repository.SWResult
 import com.anstaendig.architecturecomponents.ui.MainActivityUiEvent
 import com.anstaendig.architecturecomponents.ui.MainActivityViewState
-import com.anstaendig.base.ui.event.UiEvent
-import com.anstaendig.base.viewmodel.BaseViewModel
+import com.anstaendig.architecturecomponents.base.ui.event.UiEvent
+import com.anstaendig.architecturecomponents.base.viewmodel.BaseViewModel
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import javax.inject.Inject

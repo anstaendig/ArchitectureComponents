@@ -3,7 +3,7 @@ package com.anstaendig.architecturecomponents.injection
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.anstaendig.architecturecomponents.viewmodel.MainActivityViewModel
-import com.anstaendig.base.viewmodel.ViewModelFactory
+import com.anstaendig.architecturecomponents.base.viewmodel.ViewModelFactory
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module

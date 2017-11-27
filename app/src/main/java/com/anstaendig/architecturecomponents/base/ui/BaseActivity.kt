@@ -1,4 +1,4 @@
-package com.anstaendig.base.ui
+package com.anstaendig.architecturecomponents.base.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
@@ -6,8 +6,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
-import com.anstaendig.base.ui.event.UiEvent
-import com.anstaendig.base.viewmodel.BaseViewModel
+import com.anstaendig.architecturecomponents.base.ui.event.UiEvent
+import com.anstaendig.architecturecomponents.base.viewmodel.BaseViewModel
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
 import io.reactivex.Observable

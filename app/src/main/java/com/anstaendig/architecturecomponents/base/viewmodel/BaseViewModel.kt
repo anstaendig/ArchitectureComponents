@@ -1,10 +1,10 @@
-package com.anstaendig.base.viewmodel
+package com.anstaendig.architecturecomponents.base.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.CallSuper
-import com.anstaendig.base.ui.BaseViewState
-import com.anstaendig.base.ui.event.UiEvent
+import com.anstaendig.architecturecomponents.base.ui.BaseViewState
+import com.anstaendig.architecturecomponents.base.ui.event.UiEvent
 import com.jakewharton.rxrelay2.PublishRelay
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
